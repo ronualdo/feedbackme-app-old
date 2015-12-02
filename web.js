@@ -1,8 +1,9 @@
 var static = require('statik')
+var port = (process.env.PORT || 9000)
 var server = static({
-  port: process.env.PORT,
+  port: port,
   root: './dist'
 });
 
 server.listen();
-console.log('foi');
+console.log('servico rolando na porta' + port);
