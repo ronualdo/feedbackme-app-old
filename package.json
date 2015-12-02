@@ -40,7 +40,8 @@
   },
   "scripts": {
     "start": "node web.js",
-    "test": "grunt test"
+    "test": "grunt test",
+    "postinstall": "bower install"
   },
   "dependencies": {
     "express": "^4.13.3",
