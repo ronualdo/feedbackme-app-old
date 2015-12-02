@@ -24,7 +24,7 @@ describe('Controller: MainCtrl', function () {
     var newFeedback = {
       feedbackText: 'my new feedback',
       author: 'author'
-    }
+    };
 
     scope.feedback = newFeedback;
     httpBackend.expectPOST(testUserFeedbackUrl, newFeedback).respond('test');
