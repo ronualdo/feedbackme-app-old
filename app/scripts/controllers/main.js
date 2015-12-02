@@ -11,7 +11,7 @@ angular.module('feedbackmeApp')
     
     $scope.provideFeedback = function() {
       $http.post('http://f33dbackme.herokuapp.com/test_user/feedbacks', $scope.feedback)
-        .success(function(data) {
+        .success(function() {
           $scope.message = 'Feedback sent!';
           $scope.showMessage = true;
         })
