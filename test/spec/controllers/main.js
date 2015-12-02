@@ -6,18 +6,47 @@ describe('Controller: MainCtrl', function () {
   beforeEach(module('feedbackmeApp'));
 
   var MainCtrl,
-    scope;
+    scope,
+    httpBackend;
+
+  var testUserFeedbackUrl = 'http://f33dbackme.herokuapp.com/test_user/feedbacks';
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
+  beforeEach(inject(function ($controller, $rootScope, $httpBackend) {
     scope = $rootScope.$new();
     MainCtrl = $controller('MainCtrl', {
       $scope: scope
-      // place here mocked dependencies
     });
+    httpBackend = $httpBackend;
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(MainCtrl.awesomeThings.length).toBe(3);
+  it('should show a success message when able to provide new feedback', function() {
+    var newFeedback = {
+      feedbackText: 'my new feedback',
+      author: 'author'
+    }
+
+    scope.feedback = newFeedback;
+    httpBackend.expectPOST(testUserFeedbackUrl, newFeedback).respond('test');
+    scope.provideFeedback();
+    httpBackend.flush();
+    expect(scope.message).toContain('sent');
+  });
+
+  it('should inform when feedbackText validation fail', function(){
+    var feedbackTextless = {
+      author: 'author'
+    };
+
+    scope.feedback = feedbackTextless;
+    httpBackend.expectPOST(testUserFeedbackUrl, feedbackTextless)
+      .respond(401, {field: 'feedbackText', message: 'feedbackText not null'});
+    
+
+    scope.provideFeedback();
+    
+    httpBackend.flush();
+
+    expect(scope.message).toContain('feedbackText not null');
   });
 });

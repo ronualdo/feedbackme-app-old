@@ -1,17 +1,28 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name feedbackmeApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the feedbackmeApp
- */
 angular.module('feedbackmeApp')
-  .controller('MainCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('MainCtrl', function ($scope, $http) {
+    $scope.message = '';
+    $scope.showMessage = false;
+    $scope.feedback = {
+      feedbackText: '',
+      author: ''
+    };
+    
+    $scope.provideFeedback = function() {
+      $http.post('http://f33dbackme.herokuapp.com/test_user/feedbacks', $scope.feedback)
+        .success(function(data) {
+          $scope.message = 'Feedback sent!';
+          $scope.showMessage = true;
+        })
+        .error(function(error){
+          $scope.message = error.message;
+          $scope.showMessage = true;
+        });
+
+      $scope.feedback = {
+        feedbackText: '',
+        author: ''
+      };
+    };
   });
