@@ -41,5 +41,8 @@
   "scripts": {
     "start": "node web.js",
     "test": "grunt test"
+  },
+  "dependencies": {
+    "statik": "^1.4.6"
   }
 }

@@ -1,5 +1,8 @@
 var static = require('statik')
-static({
+var server = static({
   port: 3000,
   root: './dist'
 });
+
+server.listen();
+console.log('foi');
