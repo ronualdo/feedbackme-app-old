@@ -1,6 +1,6 @@
 var static = require('statik')
 var server = static({
-  port: 3000,
+  port: process.env.PORT,
   root: './dist'
 });
 
